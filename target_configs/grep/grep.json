@@ -1,0 +1,22 @@
+{
+    "name": "grep",
+    "db": "grep",
+    "preprocessed": true,
+    "dataflow": true,
+
+    "tarfile": "grep-3.1-pre.tar.gz",
+
+    "qcow": "wheezy_panda2.qcow2",
+    "snapshot": "root",
+    "expect_prompt": "root@debian-i386:~#",
+
+    "make": "make",
+    "clean": "make clean",
+    "install": "make install",
+    "command": "{install_dir}/bin/grep '\\(.\\).\\(.\\)' {input_file}",
+    "injfixupsscript": "fixup.sh {bug_build}",
+
+    "main_file": [ "grep-pre.c" ], 
+
+    "inputs": [ "inputs/hi.txt" ]
+}

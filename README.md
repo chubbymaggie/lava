@@ -17,38 +17,58 @@ NYU, and Northeastern University.
 
 # Quick Start
 
-On a system running Ubuntu 16.04, you should be able to just do `python
-setup.py`. Note that this install script is fairly invasive (i.e., it
-will install lots of packages and make changes to your system). Once it
-finishes, you should have `panda` and `lava` directories (LAVA uses
-[PANDA](https://github.com/panda-re/panda) to perform dynamic taint
-analysis).
+On a system running Ubuntu 16.04, you should be able to just run `python2
+setup.py`. Note that this install script will install packages and make
+changes to your system. Once it finishes, you should have
+[PANDA](https://github.com/panda-re/panda) installed into
+`panda/build/` (PANDA is used to perform dynamic taint analysis).
 
-Next, run `init-project.py` to configure a new project to inject bugs
-into. This creates an example JSON configuration file used by LAVA; by
-default it creates a configuration for putting bugs into the `file`
-program, but you can customize it for your own software.
+Next, run `init-host.py` to generate a `host.json`.
+This file is used by LAVA to store settings specific
+to your machine. You can edit these settings as necessary, but the default
+values should work.
 
-Finally, you can run `scripts/everything.sh` to actually inject bugs
-into the program. The simplest way to invoke it is to tell it to carry
-out all steps (`-a`) and delete old files/directores as needed (`-k`):
+Project configurations are located in the `target_configs` directory, where
+every configuration is located at `target_configs/projectname/projectname.json`.
+Paths specified within these configuration files are relative to values set
+in your `host.json` file.
+
+Finally, you can run `./scripts/lava.sh` to actually inject bugs
+into a program. Just provide the name of a project that is in the
+`target_configs` directory, for example:
 
 ```
-scripts/everything.sh -ak path/to/config.json
+./scripts/lava.sh toy
 ```
 
-You should now have a buggy copy of your program!
+You should now have a buggy copy of toy!
 
-Of course, it's rarely this easy. You will likely have to tweak the
-build scripts for your program to ensure everything works well with
-LAVA.
+If you want to inject bugs into a new target, you will likely need to make some
+modifications. Check out [How-to-Lava](docs/how-to-lava.md) for guidance.
 
 # Documentation
+Check out the [docs](docs/) folder to get started.
 
-At the moment, this README is about all there is. We hope to add
-tutorials soon, and developer documentation a bit further off in the
-future. If you'd like to contribute documentation, of course, we would
-be thrilled to accept pull requests.
+
+# Current Status
+## Version 2.0.0
+
+Expected results from test suite:
+```
+Project       RESET    CLEAN    ADD      MAKE     TAINT    INJECT   COMP
+blecho        PASS     PASS     PASS     PASS     PASS     PASS     PASS
+libyaml       PASS     PASS     PASS     PASS     PASS     PASS     PASS
+file          PASS     PASS     PASS     PASS     PASS     PASS     PASS
+toy           PASS     PASS     PASS     PASS     PASS     PASS     PASS
+pcre2         PASS     PASS     PASS     PASS     PASS     PASS     PASS
+jq            PASS     PASS     PASS     PASS     PASS     PASS     PASS
+grep          PASS     PASS     PASS     PASS     PASS     FAIL
+libjpeg       PASS     PASS     PASS     PASS     FAIL
+tinyexpr      PASS     PASS     PASS     PASS     FAIL
+duktape       PASS     PASS     PASS     FAIL
+tweetNaCl     PASS     PASS     FAIL
+gzip          FAIL
+```
 
 # Publications
 

@@ -1,0 +1,21 @@
+{
+    "name": "pcre2",
+    "db": "pcre2",
+    "preprocessed": true,
+    "dataflow": true,
+
+    "tarfile": "pcre2-10.2-pre.tar.gz",
+
+    "qcow": "wheezy_panda2.qcow2",
+    "snapshot": "root",
+    "expect_prompt": "root@debian-i386:~#",
+
+    "make": "make",
+    "clean": "make clean",
+    "install": "make install",
+    "command": "{install_dir}/bin/pcre2grep -f {input_file} /etc/passwd",
+
+    "main_file": [ "src/pcre2grep-pre.c" ],
+
+    "inputs": [ "inputs/patterns" ]
+}

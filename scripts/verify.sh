@@ -10,7 +10,10 @@
 # Assume that $2 is the path to json file
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
+version="2.0.0"
+
 USAGE() {
+  echo "$0 version $version"
   echo "USAGE: $0 /path/to/json"
   exit 1
 }
@@ -20,11 +23,8 @@ if [ -z "$1" ]; then
 else
     json="$1"
 fi
+. `dirname $0`/vars.sh
 
-directory="$(jq -r .directory $json)"
-name="$(jq -r .name $json)"
-exitCode="$(jq -r .expected_exit_code $json)"
-logs=$directory/$name/logs
 inject_log="$logs/$(ls -t $logs | grep -E "inject-[0-9]+.log" | head -n 1)"
 
 [ "$exitCode" = "null" ] && exitCode="0";

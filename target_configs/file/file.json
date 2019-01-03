@@ -1,0 +1,24 @@
+{
+    "name": "file",
+    "db": "file",
+    "preprocessed": true,
+    "dataflow": true,
+
+    "tarfile": "file-5.22-pre.tar.gz",
+
+    "qcow": "wheezy_panda2.qcow2",
+    "snapshot": "root",
+    "expect_prompt": "root@debian-i386:~#",
+
+    "make": "make",
+    "clean": "make clean",
+    "install": "make install",
+    "command": "{install_dir}/bin/file -m {install_dir}/share/misc/magic.mgc {input_file}",
+    "injfixupsscript": "file_fixup.sh {bug_build}",
+
+    "max_tcn": 10,
+
+    "main_file": [ "src/file.c" ],
+
+    "inputs": ["inputs/constitution_36_garfield.doc"]
+}
